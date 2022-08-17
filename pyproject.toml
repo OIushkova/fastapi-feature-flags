@@ -1,0 +1,38 @@
+[tool.poetry]
+name = "fastapiproject"
+version = "0.1.0"
+description = ""
+authors = ["Olga Iushkova <iushkovaol@gmail.com>"]
+
+[tool.poetry.dependencies]
+python = "^3.9"
+fastapi = "^0.78.0"
+uvicorn = "^0.17.6"
+beanie = "^1.11.0"
+json-logic = "^0.6.3"
+pydantic = "^1.9.1"
+python-dotenv = "^0.20.0"
+dnspython = "^2.2.1"
+pymongo = {extras = ["srv"], version = "^4.1.1"}
+httpx = {extras = ["http2"], version = "^0.23.0"}
+pytest-asyncio = "^0.18.3"
+asgi-lifespan = "^1.0.1"
+coverage = "^6.4.3"
+
+[tool.poetry.dev-dependencies]
+black = "^22.3.0"
+flake8 = "^4.0.1"
+pytest = "^7.1.2"
+pytest-asyncio = "^0.18.3"
+testcontainers = "^3.5.4"
+
+[tool.black]
+line-length = 100
+
+[flake8]
+max-complexity = 10
+max-line-length = 120
+
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"

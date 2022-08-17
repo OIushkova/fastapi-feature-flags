@@ -1,0 +1,31 @@
+version: "3.4"
+networks:
+  fastapitest:
+
+services:
+  mongo:
+    image: mongo:5.0
+    networks:
+      - fastapitest
+    ports:
+      - "27017:27017"
+    healthcheck:
+      test: "test $$(echo 'db.runCommand({ ping: 1 }).ok' | mongo --quiet) -eq 1"
+      interval: 5s
+      retries: 10
+      start_period: 30s
+    command: --setParameter logLevel=1 --bind_ip_all --replSet rs0
+
+  mongo-init-cluster:
+    image: mongo:5.0
+    networks:
+      - fastapitest
+    healthcheck:
+      test: "test $$(echo 'db.runCommand({ ping: 1 }).ok' | mongo --quiet) -eq 1"
+      interval: 5s
+      retries: 10
+      start_period: 30s
+    command: [ "mongo", "--host", "mongo:27017", "--eval", "rs.initiate({_id: \"rs0\",members: [{_id: 0, host: \"mongo\"}]})" ]
+    depends_on:
+      mongo:
+        condition: service_healthy
